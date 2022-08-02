@@ -1,0 +1,29 @@
+[
+    {
+        "productId": 1,
+        "manufacturer": "Jones",
+        "sku": "hiu7utd7tw78t",
+        "upc": "86799869986",
+        "pricePerUnit": "500",
+        "quantityOnHand": 300,
+        "productName" : "Gas stove"
+    },
+    {
+        "productId": 2,
+        "manufacturer": "Drey",
+        "sku": "ugikuguigu",
+        "upc": "55363637",
+        "pricePerUnit": "200",
+        "quantityOnHand": 10,
+        "productName" : "Gas"
+    },
+    {
+        "productId": 3,
+        "manufacturer": "Keith",
+        "sku": "hoieiody",
+        "upc": "656566722",
+        "pricePerUnit": "700",
+        "quantityOnHand": 225,
+        "productName" : "Lightning"
+    }
+]
