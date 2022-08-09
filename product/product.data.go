@@ -1,13 +1,17 @@
 package product
 
 import (
+	"context"
 	"database/sql"
+	"time"
 
 	"github.com/mosesbenjamin/inventoryservice/database"
 )
 
 func getProduct(productID int) (*Product, error) {
-	row := database.DbConn.QueryRow(`SELECT productId, 
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	defer cancel()
+	row := database.DbConn.QueryRowContext(ctx, `SELECT productId, 
 	manufacturer,
 	sku,
 	upc,
@@ -34,7 +38,9 @@ func getProduct(productID int) (*Product, error) {
 }
 
 func getProductList() ([]Product, error) {
-	results, err := database.DbConn.Query(`SELECT productId, 
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	defer cancel()
+	results, err := database.DbConn.QueryContext(ctx, `SELECT productId, 
 	manufacturer,
 	sku,
 	upc,
@@ -62,7 +68,9 @@ func getProductList() ([]Product, error) {
 }
 
 func removeProduct(productID int) error {
-	_, err := database.DbConn.Query(`DELETE FROM products WHERE productId = ?`, productID)
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	defer cancel()
+	_, err := database.DbConn.ExecContext(ctx, `DELETE FROM products WHERE productId = ?`, productID)
 	if err != nil {
 		return err
 	}
@@ -70,7 +78,9 @@ func removeProduct(productID int) error {
 }
 
 func updateProduct(product Product) error {
-	_, err := database.DbConn.Exec(`UPDATE products SET 
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	defer cancel()
+	_, err := database.DbConn.ExecContext(ctx, `UPDATE products SET 
 	manufacturer=?, 
 	sku=?, 
 	upc=?, 
@@ -92,7 +102,9 @@ func updateProduct(product Product) error {
 }
 
 func insertProduct(product Product) (int, error) {
-	result, err := database.DbConn.Exec(`INSERT INTO products  
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	defer cancel()
+	result, err := database.DbConn.ExecContext(ctx, `INSERT INTO products  
 	(manufacturer, 
 	sku, 
 	upc, 
