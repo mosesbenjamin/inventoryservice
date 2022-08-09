@@ -37,7 +37,7 @@ func handleProducts(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusBadRequest)
 			return
 		}
-		_, err = addOrUpdateProduct(product)
+		_, err = insertProduct(product)
 		if err != nil {
 			log.Print(err)
 			w.WriteHeader(http.StatusBadRequest)
@@ -97,7 +97,7 @@ func handleProduct(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusBadRequest)
 			return
 		}
-		_, err = addOrUpdateProduct(product)
+		err = updateProduct(product)
 		if err != nil {
 			log.Print(err)
 			w.WriteHeader(http.StatusBadRequest)
@@ -105,6 +105,11 @@ func handleProduct(w http.ResponseWriter, r *http.Request) {
 		}
 	case http.MethodDelete:
 		removeProduct(productID)
+		if err != nil {
+			log.Print(err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
 
 	case http.MethodOptions:
 		return
